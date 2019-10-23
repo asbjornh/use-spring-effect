@@ -3,7 +3,7 @@ import rebound from 'rebound';
 
 export default function useSingleSpringEffect(
   initialValue = 0,
-  onSpringUpdate = () => {},
+  onSpringUpdate = v => {}, // eslint-disable-line no-unused-vars
   { tension = 50, friction = 5 } = {},
   dependencies = []
 ) {

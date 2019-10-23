@@ -11,9 +11,7 @@ const TestPage = () => {
   const [el, ref] = React.useState();
   const [animateTo] = useSpringEffect(
     0,
-    value => {
-      if (el) el.style.transform = getStyle(value);
-    },
+    value => el && (el.style.transform = getStyle(value)),
     {},
     [el]
   );
@@ -22,7 +20,7 @@ const TestPage = () => {
 
   return (
     <div>
-      <h2>useSpringEffect</h2>
+      <h2>useSpringEffect (number)</h2>
       <div className="box" ref={ref} />
       <button data-back-button type="button" onClick={toggle}>
         Toggle
