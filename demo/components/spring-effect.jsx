@@ -12,7 +12,6 @@ const TestPage = () => {
   const [animateTo] = useSpringEffect(
     0,
     value => el && (el.style.transform = getStyle(value)),
-    {},
     [el]
   );
 

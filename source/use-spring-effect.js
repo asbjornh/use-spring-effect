@@ -5,8 +5,8 @@ import useSingleSpringEffect from './use-single-spring-effect';
 export default function useSpringEffect(
   initialValue,
   onSpringUpdate = v => {}, // eslint-disable-line no-unused-vars
-  springConfig,
-  dependencies = []
+  configOrDependencies,
+  dependencies
 ) {
   const init = React.useRef(initialValue);
 
@@ -14,7 +14,7 @@ export default function useSpringEffect(
     return useSingleSpringEffect(
       initialValue,
       onSpringUpdate,
-      springConfig,
+      configOrDependencies,
       dependencies
     );
   }
@@ -30,7 +30,7 @@ export default function useSpringEffect(
         animatedValues.current[key] = val;
         onSpringUpdate(animatedValues.current);
       },
-      springConfig,
+      configOrDependencies,
       dependencies
     );
     springs.current[key] = callbacks;

@@ -1,15 +1,25 @@
 import React from 'react';
 import rebound from 'rebound';
 
+const defaultConfig = { tension: 50, friction: 5 };
+
 export default function useSingleSpringEffect(
   initialValue = 0,
   onSpringUpdate = v => {}, // eslint-disable-line no-unused-vars
-  { tension = 50, friction = 5 } = {},
+  configOrDependencies,
   dependencies = []
 ) {
+  const config = Array.isArray(configOrDependencies)
+    ? defaultConfig
+    : configOrDependencies || defaultConfig;
+
+  const deps = Array.isArray(configOrDependencies)
+    ? configOrDependencies
+    : dependencies;
+
   const springSystem = React.useRef(new rebound.SpringSystem());
   const spring = React.useRef(
-    springSystem.current.createSpring(tension, friction)
+    springSystem.current.createSpring(config.tension, config.friction)
   );
 
   // Set initial value and cleanup on unmount
@@ -27,7 +37,7 @@ export default function useSingleSpringEffect(
     });
 
     return () => spring.current.removeAllListeners();
-  }, dependencies);
+  }, [deps, ...dependencies]);
 
   // Animate value
   const valueRef = React.useRef(initialValue);

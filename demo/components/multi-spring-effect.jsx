@@ -13,7 +13,6 @@ const TestPage = () => {
     ({ x, y }) => {
       if (el) el.style.transform = getTransform(x, y);
     },
-    {},
     [el]
   );
 

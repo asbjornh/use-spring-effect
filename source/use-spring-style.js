@@ -10,7 +10,7 @@ const setStyle = (element, style = {}) =>
 export default function useSpring(
   initialValue = 0,
   getStyle = () => ({}),
-  springOptions = {},
+  configOrDependencies,
   dependencies = []
 ) {
   const [element, setElement] = React.useState();
@@ -20,7 +20,7 @@ export default function useSpring(
     value => {
       element && setStyle(element, getStyle(value));
     },
-    springOptions,
+    configOrDependencies,
     [element, ...dependencies]
   );
 
