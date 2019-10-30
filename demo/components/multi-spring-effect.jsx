@@ -1,7 +1,7 @@
 import React from 'react';
 
 import transform from 'css-transform-string';
-import useSpringEffect from 'source/use-spring-effect';
+import useSpringEffect from '../../source';
 
 const getTransform = (x, y) => transform({ x, y, rotate: y / 10 + x / 10 });
 
