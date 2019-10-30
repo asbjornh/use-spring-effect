@@ -1,7 +1,7 @@
 import React from 'react';
 
 import transform from 'css-transform-string';
-import { useSpringStyle } from '../../source';
+import { useSpringStyle } from '../../source/index';
 
 const getStyle = val => ({
   transform: transform({ x: val })

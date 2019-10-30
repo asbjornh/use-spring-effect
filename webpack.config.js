@@ -23,6 +23,11 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.ts$/,
+        exclude: /node_modules/,
+        use: ['ts-loader']
+      },
+      {
         test: /\.jsx?$/,
         exclude: /node_modules/,
         use: ['babel-loader', 'eslint-loader']
@@ -35,7 +40,7 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: ['.js', '.jsx'],
+    extensions: ['.js', '.jsx', '.ts'],
     alias: {
       components: path.resolve('./demo/components'),
       source: path.resolve('./source')

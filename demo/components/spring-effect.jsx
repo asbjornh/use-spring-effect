@@ -2,7 +2,7 @@ import React from 'react';
 
 import transform from 'css-transform-string';
 
-import useSpringEffect from '../../source';
+import useSpringEffect from '../../source/index';
 
 const getStyle = val =>
   transform({ x: val * 300, scale: 1 - 0.5 * val, rotate: val * 90 });

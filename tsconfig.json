@@ -1,0 +1,7 @@
+{
+  "include": ["source"],
+  "compilerOptions": {
+    "declaration": true,
+    "module": "commonjs"
+  }
+}
