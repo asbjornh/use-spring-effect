@@ -9,13 +9,13 @@ const getStyle = val =>
 
 const TestPage = () => {
   const [el, ref] = React.useState();
-  const [animateTo] = useSpringEffect(
+  const [transitionTo] = useSpringEffect(
     0,
     value => el && (el.style.transform = getStyle(value)),
     [el]
   );
 
-  const toggle = () => animateTo(value => (value === 0 ? 1 : 0));
+  const toggle = () => transitionTo(value => (value === 0 ? 1 : 0));
 
   return (
     <div>

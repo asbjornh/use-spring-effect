@@ -1,7 +1,7 @@
 import React from 'react';
-import rebound from 'rebound';
+import Spring from 'tiny-spring';
 
-const defaultConfig = { tension: 50, friction: 5 };
+const defaultConfig = { stiffness: 200, damping: 10, precision: 100 };
 
 export default function useSingleSpringEffect(
   initialValue = 0,
@@ -11,40 +11,26 @@ export default function useSingleSpringEffect(
 ) {
   const config = Array.isArray(configOrDependencies)
     ? defaultConfig
-    : configOrDependencies || defaultConfig;
+    : { ...defaultConfig, ...configOrDependencies };
 
   const deps = Array.isArray(configOrDependencies)
     ? configOrDependencies
     : dependencies;
 
-  const springSystem = React.useRef(new rebound.SpringSystem());
-  const spring = React.useRef(
-    springSystem.current.createSpring(config.tension, config.friction)
-  );
+  const spring = React.useRef(Spring(initialValue, config));
 
-  // Set initial value and cleanup on unmount
+  // Unmount
+  React.useEffect(() => () => spring.current.destroy(), []);
+
   React.useEffect(() => {
-    spring.current.setCurrentValue(initialValue).setAtRest();
-    return () => spring.current.destroy();
-  }, []);
+    spring.current.onUpdate(onSpringUpdate);
+  }, deps);
 
-  // Connect `onSpringUpdate` to spring event
-  React.useEffect(() => {
-    spring.current.addListener({
-      onSpringUpdate: spring => {
-        onSpringUpdate(spring.getCurrentValue());
-      }
-    });
-
-    return () => spring.current.removeAllListeners();
-  }, [deps, ...dependencies]);
-
-  // Animate value
   const valueRef = React.useRef(initialValue);
-  const animateToValue = React.useCallback(value => {
+  const transitionTo = React.useCallback(value => {
     const newValue =
       typeof value === 'function' ? value(valueRef.current) : value;
-    spring.current.setEndValue(newValue);
+    spring.current.transitionTo(newValue);
     valueRef.current = newValue;
   }, []);
 
@@ -52,9 +38,9 @@ export default function useSingleSpringEffect(
   const setValue = React.useCallback(value => {
     const newValue =
       typeof value === 'function' ? value(valueRef.current) : value;
-    spring.current.setCurrentValue(newValue).setAtRest();
+    spring.current.setValue(newValue);
     valueRef.current = newValue;
   }, []);
 
-  return [animateToValue, setValue];
+  return [transitionTo, setValue];
 }

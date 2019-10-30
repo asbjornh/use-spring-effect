@@ -9,7 +9,7 @@
     "lint:fix": "eslint --ext js,jsx ./source --fix"
   },
   "dependencies": {
-    "rebound": "^0.1.0"
+    "tiny-spring": "^0.3.0"
   },
   "peerDependencies": {
     "react": "^16.8.0"

@@ -8,10 +8,10 @@ const getStyle = val => ({
 });
 
 const TestPage = () => {
-  const [ref, animateTo] = useSpringStyle(0, getStyle);
+  const [ref, transitionTo] = useSpringStyle(0, getStyle);
 
   const toggle = () =>
-    animateTo((value, el) => (value === 0 ? el.offsetWidth : 0));
+    transitionTo((value, el) => (value === 0 ? el.offsetWidth : 0));
 
   return (
     <div>

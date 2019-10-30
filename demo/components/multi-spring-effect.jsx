@@ -8,7 +8,7 @@ const getTransform = (x, y) => transform({ x, y, rotate: y / 10 + x / 10 });
 const TestPage = () => {
   const [el, ref] = React.useState();
 
-  const [animateTo] = useSpringEffect(
+  const [transitionTo] = useSpringEffect(
     { x: 0, y: 0 },
     ({ x, y }) => {
       if (el) el.style.transform = getTransform(x, y);
@@ -18,7 +18,7 @@ const TestPage = () => {
 
   const onMouseMove = e => {
     const rect = e.target.getBoundingClientRect();
-    animateTo({
+    transitionTo({
       x: e.clientX,
       y: e.clientY - rect.top
     });
