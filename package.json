@@ -12,6 +12,10 @@
     "transition"
   ],
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/asbjornh/use-spring-effect.git"
+  },
   "scripts": {
     "build": "tsc",
     "dev": "webpack-dev-server --mode=development",
