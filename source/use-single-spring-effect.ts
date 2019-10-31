@@ -9,9 +9,7 @@ export type SpringConfig = {
   precision?: number;
 };
 
-export type UpdateSpring = (
-  value: number | ((value: number) => number)
-) => void;
+export type UpdateSpring<T> = (value: ((value: T) => T) | T) => void;
 
 export default function useSingleSpringEffect(
   initialValue = 0,
@@ -37,7 +35,7 @@ export default function useSingleSpringEffect(
   }, deps);
 
   const valueRef = React.useRef(initialValue);
-  const transitionTo: UpdateSpring = React.useCallback(value => {
+  const transitionTo: UpdateSpring<number> = React.useCallback(value => {
     const newValue =
       typeof value === 'function' ? value(valueRef.current) : value;
     spring.current.transitionTo(newValue);
@@ -45,7 +43,7 @@ export default function useSingleSpringEffect(
   }, []);
 
   // Set value without animation
-  const setValue: UpdateSpring = React.useCallback(value => {
+  const setValue: UpdateSpring<number> = React.useCallback(value => {
     const newValue =
       typeof value === 'function' ? value(valueRef.current) : value;
     spring.current.setValue(newValue);

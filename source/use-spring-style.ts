@@ -17,7 +17,7 @@ type InlineStyle = { [key: string]: string | number };
 export default function useSpring(
   initialValue = 0,
   getStyle = (value: number): InlineStyle => ({}),
-  configOrDependencies: any[] | SpringConfig,
+  configOrDependencies?: any[] | SpringConfig,
   dependencies = []
 ): [React.Dispatch<any>, UpdateSpring, UpdateSpring] {
   const [element, setElement] = React.useState();

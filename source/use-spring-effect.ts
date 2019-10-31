@@ -5,21 +5,23 @@ import useSingleSpringEffect, {
   UpdateSpring
 } from './use-single-spring-effect';
 
-export default function useSpringEffect(
-  initialValue: number | { [key: string]: number },
-  onSpringUpdate = (value: number) => {},
-  configOrDependencies: any[] | SpringConfig,
-  dependencies: any[]
-) {
-  const init = React.useRef(initialValue);
+type Dict = { [key: string]: number };
+
+export default function useSpringEffect<T = number | Dict>(
+  initialValue: T,
+  onSpringUpdate = (value: T) => {},
+  configOrDependencies?: any[] | SpringConfig,
+  dependencies?: any[]
+): UpdateSpring<T>[] {
+  const init: { current: T } = React.useRef(initialValue);
 
   if (typeof init.current === 'number') {
     return useSingleSpringEffect(
-      initialValue as number,
-      onSpringUpdate,
+      init.current,
+      onSpringUpdate as any,
       configOrDependencies,
       dependencies
-    );
+    ) as any;
   }
 
   const springs = React.useRef({});
@@ -39,7 +41,7 @@ export default function useSpringEffect(
     springs.current[key] = callbacks;
   }
 
-  const transitionTo: UpdateSpring = React.useCallback((value = {}) => {
+  const transitionTo = React.useCallback((value = {}) => {
     Object.entries(value).forEach(([key, value]) => {
       if (!springs.current[key]) return;
       const newValue =
@@ -49,7 +51,7 @@ export default function useSpringEffect(
     });
   }, []);
 
-  const setValue: UpdateSpring = React.useCallback((value = {}) => {
+  const setValue = React.useCallback((value = {}) => {
     Object.entries(value).forEach(([key, value]) => {
       if (!springs.current[key]) return;
       const newValue =
