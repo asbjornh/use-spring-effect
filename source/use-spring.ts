@@ -6,7 +6,7 @@ import { SpringConfig } from './use-spring-effect';
 export default function useSpring(
   initialValue: number,
   configOrDependencies?: any[] | SpringConfig,
-  dependencies?
+  dependencies?: any[]
 ): [number, (v: number) => void, (v: number) => void] {
   const [state, setState] = React.useState(initialValue);
 

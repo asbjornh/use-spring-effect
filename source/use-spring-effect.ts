@@ -10,8 +10,8 @@ export type SpringConfig = {
 };
 
 export default function useSpringEffect(
-  initialValue = 0,
-  onSpringUpdate = (value: number) => {},
+  initialValue: number,
+  onUpdate: (value: number) => void,
   configOrDependencies: SpringConfig | any[],
   dependencies: any[] = []
 ) {
@@ -24,7 +24,7 @@ export default function useSpringEffect(
     : dependencies;
 
   const spring = React.useMemo(() => Spring(initialValue, config), []);
-  React.useEffect(() => spring.onUpdate(onSpringUpdate), deps);
+  React.useEffect(() => spring.onUpdate(onUpdate), deps);
   React.useEffect(() => () => spring.destroy(), []); // Unmount
 
   return [spring.transitionTo, spring.transitionTo];

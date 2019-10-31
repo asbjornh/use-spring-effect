@@ -6,7 +6,7 @@ type NumberDict = { [key: string]: number };
 
 export default function useMultiSpringEffect(
   initialValue: NumberDict = {},
-  onSpringUpdate = (value: NumberDict) => {},
+  onUpdate = (value: NumberDict) => {},
   configOrDependencies?: any[] | SpringConfig,
   dependencies?: any[]
 ): ((value: NumberDict) => void)[] {
@@ -23,7 +23,7 @@ export default function useMultiSpringEffect(
       values.current[key],
       val => {
         animatedValues.current[key] = val;
-        onSpringUpdate(animatedValues.current);
+        onUpdate(animatedValues.current);
       },
       configOrDependencies,
       dependencies
