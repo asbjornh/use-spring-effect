@@ -23,7 +23,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.ts$/,
+        test: /\.tsx?$/,
         exclude: /node_modules/,
         use: ['ts-loader']
       },
@@ -40,7 +40,7 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: ['.js', '.jsx', '.ts'],
+    extensions: ['.js', '.jsx', '.ts', '.tsx'],
     alias: {
       components: path.resolve('./demo/components'),
       source: path.resolve('./source')

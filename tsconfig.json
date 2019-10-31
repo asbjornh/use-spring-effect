@@ -2,6 +2,7 @@
   "include": ["source"],
   "compilerOptions": {
     "declaration": true,
-    "module": "commonjs"
+    "module": "commonjs",
+    "jsx": "react"
   }
 }

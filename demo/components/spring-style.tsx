@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 
 import transform from 'css-transform-string';
 import { useSpringStyle } from '../../source/index';
