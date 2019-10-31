@@ -6,9 +6,11 @@ React hooks for spring-animated side effects.
 npm install use-spring-effect
 ```
 
-Spring dynamics are a great alternative to the traditional duration/easing model of web animation. There are lots of good alternatives out there, like `react-motion`, `react-spring` or `animated`. Most of these, however, rely on React state. Running animations through state in React can sometimes come at a significant performance cost, as React attempts to evaluate a huge subtree 60 times per second.
+Spring dynamics are a great alternative to the traditional duration/easing model of UI animation. There are lots of good alternatives out there, like `react-motion`, `react-spring` or `animated`. Most of these, however, rely on React state. Running animations through state in React can sometimes come at a significant performance cost, as React desperately attempts to evaluate huge subtrees 60 times per second.
 
-`use-spring-effect` attempts to solve this problem by exposing a spring as a side effect rather than through state. If this makes you uncomfortable there is also a stateful `use-spring` included.
+`use-spring-effect` attempts to solve this problem by exposing a spring as a side effect rather than through state. If this makes you uncomfortable there is also a stateful `useSpring` included.
+
+If you're not sure what spring animation is, Cheng Lou has an [excellent talk](https://www.youtube.com/watch?v=1tavDv5hXpo) about it.
 
 ## TDLR usage
 
@@ -71,15 +73,16 @@ const [ref, transitionTo, setValue] = useSpringStyle();
 ```
 
 ```ts
-type UpdateSpring = (
-  value: number | ((element: HTMLElement) => number)
-) => void;
 function useSpringStyle(
   initialValue: number,
   getStyle: (value: number) => InlineStyle,
   configOrDependencies?: SpringConfig | any[],
   dependencies = []
 ): [React.Dispatch<any>, UpdateSpring, UpdateSpring];
+
+type UpdateSpring = (
+  value: number | ((element: HTMLElement) => number)
+) => void;
 ```
 
 See usage example above. This hook returns a `ref` that needs to be connected to the element you want to apply animation to. While animating the hook will apply the inline styles to the `ref`. The second argument to `useSpringStyle` is a function that is called with the current spring value and should return an object of inline styles. `transitionTo` and `setValue` take a number or a function. In case of a function, it will be called with the animated element (example below).
@@ -111,13 +114,14 @@ const [transitionTo, setValue] = useMultiSpringEffect();
 ```
 
 ```ts
-type NumberDict = { [key: string]: number };
 function useMultiSpringEffect(
   initialValue: NumberDict,
   onUpdate: (value: NumberDict) => void,
   configOrDependencies?: SpringConfig | any[],
   dependencies?: any[]
 ): ((value: NumberDict) => void)[];
+
+type NumberDict = { [key: string]: number };
 ```
 
 This hook works the same way as `useSpringEffect` except for the fact that it can animate multiple values at the same time. This is useful for stuff like tracking the mouse position or other things that depend on two or more values. Two things to note:
