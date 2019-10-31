@@ -1,13 +1,22 @@
 {
   "name": "use-spring-effect",
+  "description": "React hooks for spring-animated side effects",
   "version": "0.1.0",
   "author": "Asbjørn Hegdahl",
+  "keywords": ["react", "hook", "hooks", "spring", "animation", "transition"],
   "license": "MIT",
   "scripts": {
+    "build": "tsc",
     "dev": "webpack-dev-server --mode=development",
     "lint": "eslint --ext js,jsx ./source",
     "lint:fix": "eslint --ext js,jsx ./source --fix"
   },
+  "main": "lib/index.js",
+  "files": [
+    "lib",
+    "LICENSE",
+    "README.md"
+  ],
   "dependencies": {
     "tiny-spring": "^0.3.0"
   },

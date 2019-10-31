@@ -17,7 +17,7 @@ export default function useSpringEffect(
 ) {
   const config = Array.isArray(configOrDependencies)
     ? defaultConfig
-    : { ...defaultConfig, ...configOrDependencies };
+    : Object.assign({}, defaultConfig, configOrDependencies);
 
   const deps = Array.isArray(configOrDependencies)
     ? configOrDependencies

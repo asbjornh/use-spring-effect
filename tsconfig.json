@@ -3,6 +3,7 @@
   "compilerOptions": {
     "declaration": true,
     "module": "commonjs",
-    "jsx": "react"
+    "jsx": "react",
+    "outDir": "lib"
   }
 }

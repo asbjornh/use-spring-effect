@@ -28,7 +28,7 @@ export default function useSpringStyle(
       element && setStyle(element, getStyle(value));
     },
     configOrDependencies,
-    [element, ...dependencies]
+    dependencies.concat(element)
   );
 
   const transitionToEl: UpdateSpring = React.useCallback(
