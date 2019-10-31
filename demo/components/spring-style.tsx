@@ -8,10 +8,15 @@ const getStyle = val => ({
 });
 
 const TestPage = () => {
+  const [value, setValue] = React.useState(0);
   const [ref, transitionTo] = useSpringStyle(0, getStyle);
 
   const toggle = () =>
-    transitionTo((value, el) => (value === 0 ? el.offsetWidth : 0));
+    setValue(value => {
+      const newValue = value === 0 ? 1 : 0;
+      transitionTo(el => (newValue === 1 ? el.offsetWidth : 0));
+      return newValue;
+    });
 
   return (
     <div>

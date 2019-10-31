@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import useSpringEffect from './use-spring-effect';
-import { SpringConfig } from './use-single-spring-effect';
+import { SpringConfig } from './use-spring-effect';
 
 const setStyle = (element, style = {}) =>
   Object.entries(style).forEach(([key, value]) => {
@@ -9,12 +9,12 @@ const setStyle = (element, style = {}) =>
   });
 
 type UpdateSpring = (
-  value: number | ((value: number, element: HTMLElement) => number)
+  value: number | ((element: HTMLElement) => number)
 ) => void;
 
 type InlineStyle = { [key: string]: string | number };
 
-export default function useSpring(
+export default function useSpringStyle(
   initialValue = 0,
   getStyle = (value: number): InlineStyle => ({}),
   configOrDependencies?: any[] | SpringConfig,
@@ -32,16 +32,12 @@ export default function useSpring(
   );
 
   const transitionToEl: UpdateSpring = React.useCallback(
-    value =>
-      transitionTo(
-        typeof value === 'function' ? v => value(v, element) : value
-      ),
+    value => transitionTo(typeof value === 'function' ? value(element) : value),
     [transitionTo, element]
   );
 
   const setValueEl: UpdateSpring = React.useCallback(
-    value =>
-      setValue(typeof value === 'function' ? v => value(v, element) : value),
+    value => setValue(typeof value === 'function' ? value(element) : value),
     [element, setValue]
   );
 

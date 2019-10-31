@@ -1,14 +1,14 @@
 import * as React from 'react';
 
 import transform from 'css-transform-string';
-import useSpringEffect from '../../source/index';
+import { useMultiSpringEffect } from '../../source/index';
 
 const getTransform = (x, y) => transform({ x, y, rotate: y / 10 + x / 10 });
 
 const TestPage = () => {
   const [el, ref] = React.useState();
 
-  const [transitionTo] = useSpringEffect(
+  const [transitionTo] = useMultiSpringEffect(
     { x: 0, y: 0 },
     ({ x, y }) => {
       if (el) el.style.transform = getTransform(x, y);

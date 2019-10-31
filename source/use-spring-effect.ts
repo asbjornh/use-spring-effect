@@ -1,65 +1,31 @@
 import * as React from 'react';
+import Spring from 'tiny-spring';
 
-import useSingleSpringEffect, {
-  SpringConfig,
-  UpdateSpring
-} from './use-single-spring-effect';
+const defaultConfig = { stiffness: 200, damping: 10, precision: 100 };
 
-type Dict = { [key: string]: number };
+export type SpringConfig = {
+  stiffness?: number;
+  damping?: number;
+  precision?: number;
+};
 
-export default function useSpringEffect<T = number | Dict>(
-  initialValue: T,
-  onSpringUpdate = (value: T) => {},
-  configOrDependencies?: any[] | SpringConfig,
-  dependencies?: any[]
-): UpdateSpring<T>[] {
-  const init: { current: T } = React.useRef(initialValue);
+export default function useSpringEffect(
+  initialValue = 0,
+  onSpringUpdate = (value: number) => {},
+  configOrDependencies: SpringConfig | any[],
+  dependencies: any[] = []
+) {
+  const config = Array.isArray(configOrDependencies)
+    ? defaultConfig
+    : { ...defaultConfig, ...configOrDependencies };
 
-  if (typeof init.current === 'number') {
-    return useSingleSpringEffect(
-      init.current,
-      onSpringUpdate as any,
-      configOrDependencies,
-      dependencies
-    ) as any;
-  }
+  const deps = Array.isArray(configOrDependencies)
+    ? configOrDependencies
+    : dependencies;
 
-  const springs = React.useRef({});
-  const values = React.useRef(initialValue || {});
-  const animatedValues = React.useRef(initialValue || {});
+  const spring = React.useMemo(() => Spring(initialValue, config), []);
+  React.useEffect(() => spring.onUpdate(onSpringUpdate), deps);
+  React.useEffect(() => () => spring.destroy(), []); // Unmount
 
-  for (const key in values.current) {
-    const callbacks = useSingleSpringEffect(
-      values.current[key],
-      val => {
-        animatedValues.current[key] = val;
-        onSpringUpdate(animatedValues.current);
-      },
-      configOrDependencies,
-      dependencies
-    );
-    springs.current[key] = callbacks;
-  }
-
-  const transitionTo = React.useCallback((value = {}) => {
-    Object.entries(value).forEach(([key, value]) => {
-      if (!springs.current[key]) return;
-      const newValue =
-        typeof value === 'function' ? value(values.current) : value;
-      const [transitionTo] = springs.current[key];
-      transitionTo(newValue);
-    });
-  }, []);
-
-  const setValue = React.useCallback((value = {}) => {
-    Object.entries(value).forEach(([key, value]) => {
-      if (!springs.current[key]) return;
-      const newValue =
-        typeof value === 'function' ? value(values.current) : value;
-      const [_t, setValue] = springs.current[key];
-      setValue(newValue);
-    });
-  }, []);
-
-  return [transitionTo, setValue];
+  return [spring.transitionTo, spring.transitionTo];
 }
