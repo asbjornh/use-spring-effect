@@ -6,12 +6,17 @@ import MultiSpringEffect from './components/multi-spring-effect';
 
 const Index = () => {
   const [mounted, setMounted] = React.useState(true);
+
+  React.useEffect(() => {
+    window.addEventListener('keydown', e => {
+      if (e.key === 'Escape') setMounted(m => !m);
+    });
+  }, []);
   return (
     <React.Fragment>
-      <button onClick={() => setMounted(m => !m)}>Toggle mounted</button>
       {mounted && <SpringEffect />}
       <SpringStyle />
-      <MultiSpringEffect />
+      {mounted && <MultiSpringEffect />}
     </React.Fragment>
   );
 };
