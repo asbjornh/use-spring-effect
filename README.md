@@ -6,9 +6,9 @@ React hooks for spring-animated side effects.
 npm install use-spring-effect
 ```
 
-Spring dynamics are a great alternative to the traditional duration/easing model of web animation. There are lots of good alternatives out there, like `react-motion`, `react-spring` or `animated`. What most of these have in common is that they rely on React state.
+Spring dynamics are a great alternative to the traditional duration/easing model of web animation. There are lots of good alternatives out there, like `react-motion`, `react-spring` or `animated`. Most of these, however, rely on React state. Running animations through state in React can sometimes come at a significant performance cost, as React attempts to evaluate a huge subtree 60 times per second.
 
-Running animations through state in React can sometimes come at a significant performance cost, as React attempts to evaluate a huge subtree 60 times per second. `use-spring-effect` attempts to solve this problem by exposing the spring as a side effect rather than through state. If this makes you uncomfortable there is also a stateful `use-spring` included.
+`use-spring-effect` attempts to solve this problem by exposing a spring as a side effect rather than through state. If this makes you uncomfortable there is also a stateful `use-spring` included.
 
 ## TDLR usage
 
@@ -170,3 +170,25 @@ function useSpring(
 ```
 
 This hook returns an animated `value`. Otherwise this hook works like `useSpringEffect`.
+
+### SpringConfig
+
+```ts
+type SpringConfig = {
+  stiffness?: number;
+  damping?: number;
+  precision?: number;
+};
+```
+
+**`stiffness: number = 200`**
+
+Stiffness controls how "fast" your animation will be. Higher values result in faster motion.
+
+**`damping: number = 10`**
+
+Damping controls how much friction is applied to the spring. You can think about this as how "wobbly" the resulting motion is. Lower values result in more wobbly-ness.
+
+**`precision: number = 100`**
+
+Used to determine when to stop animating. With a precision of `0` the spring will reach its end value immediately. With really high values it might keep animating fractions of a pixel for a long time. Tweak this value if animations end abruptly or linger for too long. When tweaking this value you'll want to make big changes in order to see an effect (like adding/removing zeros).
