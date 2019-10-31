@@ -4,7 +4,7 @@ cache: yarn
 install: yarn
 script:
   - yarn build
-  - yarn test:ci
+  - yarn test
 deploy:
   provider: npm
   email: $NPM_EMAIL
