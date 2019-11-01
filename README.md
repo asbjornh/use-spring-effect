@@ -124,10 +124,7 @@ function useMultiSpringEffect(
 type NumberDict = { [key: string]: number };
 ```
 
-This hook works the same way as `useSpringEffect` except for the fact that it can animate multiple values at the same time. This is useful for stuff like tracking the mouse position or other things that depend on two or more values. Two things to note:
-
-- `onUpdate` will be called once for every key in the provided object on each frame.
-- You can't add other properties to the object other than those specified in `initialValue`.
+This hook works the same way as `useSpringEffect` except for the fact that it can animate multiple values at the same time. This is useful for stuff like tracking the mouse position or other things that depend on two or more values. You can't add other properties to the object other than those specified in `initialValue` (but you don't need to update all of the properties at the same time)
 
 Example (moves `.box` when the mouse is moved over the outer div):
 

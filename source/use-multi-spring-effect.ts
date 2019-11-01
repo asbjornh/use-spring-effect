@@ -33,7 +33,7 @@ export default function useMultiSpringEffect(
 
   const transitionTo: (value: NumberDict) => void = React.useCallback(dict => {
     for (const key in dict) {
-      if (!springs.current[key]) return;
+      if (!springs.current[key] || !dict[key]) return;
       const [transitionTo] = springs.current[key];
       transitionTo(dict[key]);
     }
@@ -41,7 +41,7 @@ export default function useMultiSpringEffect(
 
   const setValue: (value: NumberDict) => void = React.useCallback(dict => {
     for (const key in dict) {
-      if (!springs.current[key]) return;
+      if (!springs.current[key] || !dict[key]) return;
       const [_t, setValue] = springs.current[key];
       setValue(dict[key]);
     }
