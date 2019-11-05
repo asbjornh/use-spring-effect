@@ -9,7 +9,7 @@ const getStyle = val => ({
 
 const TestPage = () => {
   const [value, setValue] = React.useState(0);
-  const [ref, transitionTo] = useSpringStyle(0, getStyle);
+  const [ref, transitionTo] = useSpringStyle(0, getStyle, []);
 
   const toggle = () =>
     setValue(value => {

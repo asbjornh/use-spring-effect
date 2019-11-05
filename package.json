@@ -1,7 +1,7 @@
 {
   "name": "use-spring-effect",
   "description": "React hooks for spring-animated side effects",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "author": "Asbjørn Hegdahl",
   "keywords": [
     "react",

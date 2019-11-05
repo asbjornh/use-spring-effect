@@ -20,7 +20,7 @@ export default function useSpringEffect(
     : Object.assign({}, defaultConfig, configOrDependencies);
 
   const deps = Array.isArray(configOrDependencies)
-    ? configOrDependencies
+    ? configOrDependencies.concat(dependencies)
     : dependencies;
 
   const spring = React.useMemo(() => Spring(initialValue, config), []);
