@@ -1,5 +1,9 @@
 # useSpringEffect
 
+[![npm version](https://img.shields.io/npm/v/use-spring-effect)](https://npmjs.com/package/use-spring-effect)
+![](https://img.shields.io/badge/dependencies-1-green)
+![](https://img.shields.io/bundlephobia/min/use-spring-effect)
+
 React hooks for spring-animated side effects.
 
 ```
